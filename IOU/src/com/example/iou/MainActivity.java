@@ -1,6 +1,8 @@
 package com.example.iou;
 
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Locale;
 
 import android.app.ActionBar;
@@ -12,25 +14,21 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.app.NavUtils;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class MainActivity extends FragmentActivity implements
 		ActionBar.TabListener {
 
-	private final int ADD_DEBTOR_VIEW = 1;
+	private final static int ADD_DEBTOR = 1;
 	private final String DATA_LIST = "data_list";
 
 
@@ -109,10 +107,6 @@ public class MainActivity extends FragmentActivity implements
 	public boolean onOptionsItemSelected(MenuItem item) {
 	    // Handle presses on the action bar items
 	    switch (item.getItemId()) {
-	        case R.id.action_add_debtor:
-	        	Intent i = new Intent(this, AddDebtor.class);
-	    		startActivity(i);
-	            return true;
 	        case R.id.action_settings:
 	            //openSettings();
 	            return true;
@@ -189,7 +183,11 @@ public class MainActivity extends FragmentActivity implements
 	 * Data class for storing a debt
 	 */
 	
-	public static class DebtEntry {
+	public static class DebtEntry implements Serializable {
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
 		public String person;
 		public String amount;
 		public String description;
@@ -230,6 +228,7 @@ public class MainActivity extends FragmentActivity implements
 		public ArrayList<DebtEntry> dummy_debt_data;
 
 		public DummySectionFragment() {
+			this.setRetainInstance(true);
 			
 		}
 
@@ -257,6 +256,42 @@ public class MainActivity extends FragmentActivity implements
 			lv.setAdapter(debtAdapter);
 			
 			return rootView;
+		}
+		
+		@Override
+		public void onCreate(Bundle savedInstanceState) {
+			super.onCreate(savedInstanceState);
+			setHasOptionsMenu(true);
+		 }
+
+		
+		public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+			inflater.inflate(R.menu.add_debtor_button, menu);
+		}
+		
+		@Override
+		public boolean onOptionsItemSelected(MenuItem item) {
+		    // Handle presses on the action bar items
+		    switch (item.getItemId()) {
+		        case R.id.action_add_debtor:
+		        	Intent intent = new Intent(getActivity(), AddDebtor.class);
+	                startActivityForResult(intent, ADD_DEBTOR);
+		            return true;
+		        default:
+		            return super.onOptionsItemSelected(item);
+		    }
+		}
+	}
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data){
+		// returned from add debtor activity
+		if (requestCode == ADD_DEBTOR && resultCode == RESULT_OK){
+			Log.i("onActivityResult","returned from adding debtor");
+			/* add some data to our data structure */
+
+			/* notify adapter of data set changed */
+			//allAdapter.notifyDataSetChanged();
 		}
 	}
 
