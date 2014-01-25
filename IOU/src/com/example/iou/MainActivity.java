@@ -149,7 +149,6 @@ public class MainActivity extends FragmentActivity implements
 			Fragment fragment = new DummySectionFragment();
 			Bundle args = new Bundle();
 			args.putInt(DummySectionFragment.ARG_SECTION_NUMBER, position + 1);
-			
 			args.putSerializable(DATA_LIST, debt_data_list);
 			
 			fragment.setArguments(args);
