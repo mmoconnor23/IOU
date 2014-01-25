@@ -8,14 +8,63 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".AddDebtor" >
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+
+    
     <EditText
         android:id="@+id/debtor_name"
-        android:textSize="14pt"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+		android:layout_alignParentTop="true"
+        android:hint="@string/contact_name"
+        android:textSize="14pt" />
+    <EditText
+        android:id="@+id/debtor_phone"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/debtor_name"
+        android:layout_centerHorizontal="true"
+        android:inputType="phone"
+        android:hint="@string/contact_phone" 
+        />
+    <RelativeLayout
+        android:id="@+id/amt_money_owed"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/debtor_phone"
+        android:layout_centerHorizontal="true" >
+
+        <TextView 
+        	android:id="@+id/currency"
+	        android:textSize="14pt"
+        	android:layout_width="wrap_content"
+	        android:layout_height="wrap_content" 
+    	    android:text="@string/currency_dollar"/>
+    	<EditText 
+        	android:id="@+id/amt_dollars"
+        	android:inputType="numberDecimal"
+	        android:ems="8"
+        	android:layout_toRightOf="@id/currency"        
+	        android:layout_width="wrap_content"
+    	    android:layout_height="wrap_content"
+        	android:hint="@string/default_amt_owed" />
+    </RelativeLayout>
+    
+    <EditText
+        android:id="@+id/debt_description"
+        android:lines="2"
+        android:maxLines="2"
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
-		android:layout_alignParentTop="true"
-		android:hint="@string/contact_name"/>
+		android:layout_below="@id/amt_money_owed"
+		android:hint="@string/default_debt_description"
+		/>
+
+    <Button
+        android:id="@+id/button_finish_add_debt"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:text="@string/finish" />
+
+
 </RelativeLayout>
