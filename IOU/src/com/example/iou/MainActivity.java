@@ -29,7 +29,11 @@ public class MainActivity extends FragmentActivity implements
 		ActionBar.TabListener {
 
 	private final int ADD_DEBTOR_VIEW = 1;
+	private final String DATA_LIST = "data_list";
 
+
+	public static final DebtEntry[] dummy_debt_data = {new DebtEntry("Melissa", "5", "Target"),
+													   new DebtEntry("Mallory", "20", "Dinner")};
 	
 	/**
 	 * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -146,6 +150,8 @@ public class MainActivity extends FragmentActivity implements
 			Fragment fragment = new DummySectionFragment();
 			Bundle args = new Bundle();
 			args.putInt(DummySectionFragment.ARG_SECTION_NUMBER, position + 1);
+			args.putSerializable(DATA_LIST, dummy_debt_data);
+			
 			fragment.setArguments(args);
 			return fragment;
 		}
@@ -169,54 +175,8 @@ public class MainActivity extends FragmentActivity implements
 		}
 	}
 	
-	/*
-	 * Custom ViewHolder for ListView
-	 */
-	class ViewHolder {
 
-        TextView person;
-        TextView description;
-        
-     }
-	
-	/*
-	 * Custom Adapter class for debt list
-	 */
-	public class DebtAdapter extends BaseAdapter {
-		private DebtEntry[] debts;
-		
-		public DebtAdapter(DebtEntry[] debt_entries){
-			debts = debt_entries;
-		}
-		
-		public int getCount() {
-			return debts.length;
-		}
-		
-		public DebtEntry getItem(int position){
-			return debts[position];
-		}
 
-		@Override
-		public long getItemId(int position){
-			return position;
-		}
-
-		@Override
-		public View getView(int position, View convertView, ViewGroup parent) {
-			final ViewHolder holder;
-			LayoutInflater mInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			convertView = mInflater.inflate(R.layout.debt, null);
-           	holder = new ViewHolder();      
-            holder.person = (TextView)convertView.findViewById(R.id.debt_name);
-            holder.person.setText((CharSequence) (debts[position].getPerson()));
-            holder.description = (TextView) convertView.findViewById(R.id.debt_description);
-            holder.description.setText((CharSequence) (debts[position].getAmount() 
-            											+ " - " + debts[position].getDescription()));
-			
-            return null;
-		}
-	}
 	
 	/*
 	 * Data class for storing a debt
@@ -257,16 +217,19 @@ public class MainActivity extends FragmentActivity implements
 		 * fragment.
 		 */
 		public static final String ARG_SECTION_NUMBER = "section_number";
+		private final String DATA_LIST = "data_list";
 		
-		public static final DebtEntry[] dummy_debt_data = {new DebtEntry("Melissa", "5", "Target"),
-														   new DebtEntry("Mallory", "20", "Dinner")};
+		DebtAdapter debtAdapter;
+		public DebtEntry[] dummy_debt_data;
 
 		public DummySectionFragment() {
+			
 		}
 
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
+			
 			View rootView = inflater.inflate(R.layout.fragment_main_dummy,
 					container, false);
 			TextView dummyTextView = (TextView) rootView
@@ -277,9 +240,14 @@ public class MainActivity extends FragmentActivity implements
 				dummyTextView.setText("UOMe");
 			}
 			
+			dummy_debt_data = (DebtEntry[]) getArguments().getSerializable(DATA_LIST);
+			Context context = getActivity().getApplicationContext();
+			debtAdapter = new DebtAdapter(dummy_debt_data, context);
+			
 			ListView lv = (ListView) rootView.findViewById(R.id.debt_list);
 			lv.setItemsCanFocus(true);
-			//DebtAdapter debtAdapter = this.getActivity().new DebtAdapter(dummy_debt_data);
+			lv.setAdapter(debtAdapter);
+			
 			return rootView;
 		}
 	}
