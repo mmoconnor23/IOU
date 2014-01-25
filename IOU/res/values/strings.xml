@@ -13,7 +13,8 @@
     <string name="default_amt_owed">00.00</string>
     <string name="default_debt_description">Description (optional)</string>
     <string name="finish">Finish</string>
-    <string name="iou_or_uome">IOU | UOME</string>
+    <string name="message_iou">Who do you owe?</string>
+    <string name="message_uome">Who owes you?</string>
     
 
 </resources>
