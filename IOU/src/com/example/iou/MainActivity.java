@@ -96,9 +96,7 @@ public class MainActivity extends FragmentActivity implements
 	    switch (item.getItemId()) {
 	        case R.id.action_add_debtor:
 	        	Intent i = new Intent(this, AddDebtor.class);
-	    		//i.putExtra("all events", list_master);
-	    		//i.putExtra("rec events", list_recommended);
-	    		startActivityForResult(i, ADD_DEBTOR_VIEW);
+	    		startActivity(i);
 	            return true;
 	        case R.id.action_settings:
 	            //openSettings();
@@ -108,17 +106,6 @@ public class MainActivity extends FragmentActivity implements
 	    }
 	}
 
-	/*
-	 * Starts an intent to begin the mapping activity
-	 */
-	/*public void openAddDebtorActivity(View v){
-		Intent i = new Intent(this, AddDebtor.class);
-		//i.putExtra("all events", list_master);
-		//i.putExtra("rec events", list_recommended);
-		startActivity(i);
-		// pass to maps view
-	}*/
-	
 	@Override
 	public void onTabSelected(ActionBar.Tab tab,
 			FragmentTransaction fragmentTransaction) {
