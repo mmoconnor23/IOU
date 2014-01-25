@@ -4,6 +4,7 @@ import java.util.Locale;
 
 import android.app.ActionBar;
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -17,6 +18,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 
 public class MainActivity extends FragmentActivity implements
@@ -158,6 +162,84 @@ public class MainActivity extends FragmentActivity implements
 			return null;
 		}
 	}
+	
+	/*
+	 * Custom ViewHolder for ListView
+	 */
+	class ViewHolder {
+
+        TextView person;
+        TextView description;
+        
+     }
+	
+	/*
+	 * Custom Adapter class for debt list
+	 */
+	public class DebtAdapter extends BaseAdapter {
+		private DebtEntry[] debts;
+		
+		public DebtAdapter(DebtEntry[] debt_entries){
+			debts = debt_entries;
+		}
+		
+		public int getCount() {
+			return debts.length;
+		}
+		
+		public DebtEntry getItem(int position){
+			return debts[position];
+		}
+
+		@Override
+		public long getItemId(int position){
+			return position;
+		}
+
+		@Override
+		public View getView(int position, View convertView, ViewGroup parent) {
+			final ViewHolder holder;
+			LayoutInflater mInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			convertView = mInflater.inflate(R.layout.debt, null);
+           	holder = new ViewHolder();      
+            holder.person = (TextView)convertView.findViewById(R.id.debt_name);
+            holder.person.setText((CharSequence) (debts[position].getPerson()));
+            holder.description = (TextView) convertView.findViewById(R.id.debt_description);
+            holder.description.setText((CharSequence) (debts[position].getAmount() 
+            											+ " - " + debts[position].getDescription()));
+			
+            return null;
+		}
+	}
+	
+	/*
+	 * Data class for storing a debt
+	 */
+	
+	public static class DebtEntry {
+		public String person;
+		public String amount;
+		public String description;
+		
+		// constructor
+		public DebtEntry(String p, String a, String d){
+			person = p;
+			amount = a;
+			description = d;
+		}
+		
+		public String getPerson() {
+			return person;
+		}
+		
+		public String getAmount() {
+			return person;
+		}
+		
+		public String getDescription() {
+			return person;
+		}
+	}
 
 	/**
 	 * A dummy fragment representing a section of the app, but that simply
@@ -169,6 +251,9 @@ public class MainActivity extends FragmentActivity implements
 		 * fragment.
 		 */
 		public static final String ARG_SECTION_NUMBER = "section_number";
+		
+		public static final DebtEntry[] dummy_debt_data = {new DebtEntry("Melissa", "5", "Target"),
+														   new DebtEntry("Mallory", "20", "Dinner")};
 
 		public DummySectionFragment() {
 		}
@@ -180,8 +265,15 @@ public class MainActivity extends FragmentActivity implements
 					container, false);
 			TextView dummyTextView = (TextView) rootView
 					.findViewById(R.id.section_label);
-			dummyTextView.setText(Integer.toString(getArguments().getInt(
-					ARG_SECTION_NUMBER)));
+			if (getArguments().getInt(ARG_SECTION_NUMBER) == 1) {
+				dummyTextView.setText("IOU");
+			} else if (getArguments().getInt(ARG_SECTION_NUMBER) == 2) {
+				dummyTextView.setText("UOMe");
+			}
+			
+			ListView lv = (ListView) rootView.findViewById(R.id.debt_list);
+			lv.setItemsCanFocus(true);
+			//DebtAdapter debtAdapter = this.getActivity().new DebtAdapter(dummy_debt_data);
 			return rootView;
 		}
 	}
