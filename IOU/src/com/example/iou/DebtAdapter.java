@@ -68,7 +68,6 @@ class ViewHolder {
             											+ " - " + debts.get(position).getDescription()));
             
             holder.venmo = (Button) convertView.findViewById(R.id.venmo);
-            holder.venmo.setText("VENMO");
         	// on Add button click: remove event from user events (since it was added before)
             holder.venmo.setOnClickListener(new OnClickListener() {
                 @Override
