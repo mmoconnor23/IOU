@@ -32,12 +32,15 @@ public class AddDebtor extends Activity {
 		Intent intent = getIntent();
 		debtType = intent.getIntExtra("debt_type", 0);
 		
+		name = (EditText) this.findViewById(R.id.debtor_name);
 		if (debtType == IOU) {
 			// put in iou msg
 			Log.i("ADD_DEBTOR", "in iou adder");
+			name.setHint(R.string.message_iou);
 		} else {
 			// put in uome msg
 			Log.i("ADD_DEBTOR", "in uome adder");
+			name.setHint(R.string.message_uome);
 		}
 		
 		button_finish = (Button) this.findViewById(R.id.button_finish_add_debt);
@@ -52,7 +55,7 @@ public class AddDebtor extends Activity {
 
 	public void onFinishButtonPressed(View v){
 		/* grab data entered and save it as debt entry */
-		name = (EditText) this.findViewById(R.id.debtor_name);
+		
 		phone = (EditText) this.findViewById(R.id.debtor_phone);
 		amt = (EditText) this.findViewById(R.id.amt_dollars);
 		description = (EditText) this.findViewById(R.id.debt_description);

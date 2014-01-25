@@ -8,14 +8,12 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".AddDebtor" >
 
-
-    
     <EditText
         android:id="@+id/debtor_name"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-		android:layout_alignParentTop="true"
-        android:hint="@string/contact_name"
+        android:layout_alignParentTop="true"
+        android:inputType="text"
         android:textSize="14pt" />
     <EditText
         android:id="@+id/debtor_phone"
