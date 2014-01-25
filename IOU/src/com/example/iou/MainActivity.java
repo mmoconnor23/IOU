@@ -28,15 +28,13 @@ import android.widget.TextView;
 public class MainActivity extends FragmentActivity implements
 		ActionBar.TabListener {
 
-	private final static int ADD_DEBTOR = 1;
+	private final static int IOU = 0;
+	private final static int UOME = 1;
+	private final static int ADD_DEBTOR_ACTIVITY = 1;
 	private final String DATA_LIST = "data_list";
-
-
-	public static final DebtEntry[] dummy_debt_data = {new DebtEntry("Melissa", "", "5", "Target"),
-													   new DebtEntry("Mallory", "", "20", "Dinner")};
 	
-	public static ArrayList<DebtEntry> debt_data_list = new ArrayList<DebtEntry>();
-	
+	public static ArrayList<DebtEntry> debt_data_list = new ArrayList<DebtEntry>(); //IOU
+	public static ArrayList<DebtEntry> debtors_data_list = new ArrayList<DebtEntry>(); //UOME
 	/**
 	 * The {@link android.support.v4.view.PagerAdapter} that will provide
 	 * fragments for each of the sections. We use a
@@ -58,7 +56,7 @@ public class MainActivity extends FragmentActivity implements
 		setContentView(R.layout.activity_main);
 		
 		debt_data_list.add(new DebtEntry("Melissa", "", "5", "Target"));
-		debt_data_list.add(new DebtEntry("Mallory", "", "20", "Dinner"));
+		debtors_data_list.add(new DebtEntry("Madison", "", "20", "Dinner"));
 
 		// Set up the action bar.
 		final ActionBar actionBar = getActionBar();
@@ -151,6 +149,7 @@ public class MainActivity extends FragmentActivity implements
 			Fragment fragment = new DummySectionFragment();
 			Bundle args = new Bundle();
 			args.putInt(DummySectionFragment.ARG_SECTION_NUMBER, position + 1);
+			
 			args.putSerializable(DATA_LIST, debt_data_list);
 			
 			fragment.setArguments(args);
@@ -233,10 +232,9 @@ public class MainActivity extends FragmentActivity implements
 		private final String DATA_LIST = "data_list";
 		
 		DebtAdapter debtAdapter;
-		public ArrayList<DebtEntry> dummy_debt_data;
 
 		public DummySectionFragment() {
-			//this.setRetainInstance(true);
+			//this.setRetainInstance(true);  //should keep the fragment working on a phone rotation
 			Log.d("IOU", "trying to implement serializable");
 			
 		}
@@ -249,18 +247,16 @@ public class MainActivity extends FragmentActivity implements
 					container, false);
 			TextView dummyTextView = (TextView) rootView
 					.findViewById(R.id.section_label);
+			
+			Context context = getActivity().getApplicationContext();
+			
 			if (getArguments().getInt(ARG_SECTION_NUMBER) == 1) {
 				dummyTextView.setText("IOU");
+				debtAdapter = new DebtAdapter(debt_data_list, context);
 			} else if (getArguments().getInt(ARG_SECTION_NUMBER) == 2) {
 				dummyTextView.setText("UOMe");
+				debtAdapter = new DebtAdapter(debtors_data_list, context);
 			}
-			
-			// it's hacky to not check what's actually in this serializable, but we can assume
-			// for the hackathon that it's definitely this and not a big deal
-			dummy_debt_data = (ArrayList<DebtEntry>) getArguments().getSerializable(DATA_LIST);
-			Log.d("onCreateView", "dummy_debt_data:" + dummy_debt_data.get(0).getDescription());
-			Context context = getActivity().getApplicationContext();
-			debtAdapter = new DebtAdapter(dummy_debt_data, context);
 			
 			ListView lv = (ListView) rootView.findViewById(R.id.debt_list);
 			lv.setItemsCanFocus(true);
@@ -286,7 +282,7 @@ public class MainActivity extends FragmentActivity implements
 		    switch (item.getItemId()) {
 		        case R.id.action_add_debtor:
 		        	Intent intent = new Intent(getActivity(), AddDebtor.class);
-	                startActivityForResult(intent, ADD_DEBTOR);
+	                startActivityForResult(intent, ADD_DEBTOR_ACTIVITY);
 		            return true;
 		        default:
 		            return super.onOptionsItemSelected(item);
@@ -295,7 +291,7 @@ public class MainActivity extends FragmentActivity implements
 		@Override
 		public void onActivityResult(int requestCode, int resultCode, Intent data){
 			// returned from add debtor activity
-			if (requestCode == ADD_DEBTOR && resultCode == RESULT_OK){
+			if (requestCode == ADD_DEBTOR_ACTIVITY && resultCode == RESULT_OK){
 				Log.i("onActivityResult","returned from adding debtor");
 				/* add some data to our data structure */
 				debt_data_list.add((DebtEntry) data.getSerializableExtra("new_debt"));
