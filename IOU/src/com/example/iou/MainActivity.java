@@ -23,6 +23,7 @@ public class MainActivity extends Activity {
         return true;
     }
     public void printMessage(){
+    	Log.d("Main", "printing yooo\n");
     	Log.d("Main", "printing yo\n");
     }
     
