@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="5sp" >
+
+    <!-- TextView for name of debtor, aligned to top of ListView item -->
+    <TextView
+        android:id="@+id/debt_name"
+        android:textSize="14pt"
+        android:textStyle="bold"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"        
+        android:layout_alignParentTop="true" />
+    
+    <!-- TextView for description of debt, aligned below name TextView -->
+    <TextView
+        android:id="@+id/debt_description"
+        android:textSize="12pt"
+        android:maxLines="2"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" 
+        android:layout_below="@+id/debt_name"/>
+    
+</RelativeLayout>
