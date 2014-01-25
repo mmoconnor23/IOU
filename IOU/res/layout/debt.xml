@@ -33,7 +33,7 @@
         android:id="@+id/venmo"
         android:text="@string/title_section1"
         android:textSize="20pt"
-        android:background="#aa0000"
+        android:background="@drawable/venmo-icon"
         android:layout_alignParentRight="true"
         android:layout_width="40dp"
         android:layout_height="40dp"
