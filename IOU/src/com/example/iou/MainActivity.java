@@ -4,6 +4,7 @@ import java.util.Locale;
 
 import android.app.ActionBar;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -18,10 +19,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends FragmentActivity implements
 		ActionBar.TabListener {
 
+	private final int ADD_DEBTOR_VIEW = 1;
+
+	
 	/**
 	 * The {@link android.support.v4.view.PagerAdapter} that will provide
 	 * fragments for each of the sections. We use a
@@ -85,21 +90,35 @@ public class MainActivity extends FragmentActivity implements
 		return true;
 	}
 	
-	/*@Override
+	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 	    // Handle presses on the action bar items
 	    switch (item.getItemId()) {
-	        case R.id.action_search:
-	            openSearch();
+	        case R.id.action_add_debtor:
+	        	Intent i = new Intent(this, AddDebtor.class);
+	    		//i.putExtra("all events", list_master);
+	    		//i.putExtra("rec events", list_recommended);
+	    		startActivityForResult(i, ADD_DEBTOR_VIEW);
 	            return true;
 	        case R.id.action_settings:
-	            openSettings();
+	            //openSettings();
 	            return true;
 	        default:
 	            return super.onOptionsItemSelected(item);
 	    }
-	}*/
+	}
 
+	/*
+	 * Starts an intent to begin the mapping activity
+	 */
+	/*public void openAddDebtorActivity(View v){
+		Intent i = new Intent(this, AddDebtor.class);
+		//i.putExtra("all events", list_master);
+		//i.putExtra("rec events", list_recommended);
+		startActivity(i);
+		// pass to maps view
+	}*/
+	
 	@Override
 	public void onTabSelected(ActionBar.Tab tab,
 			FragmentTransaction fragmentTransaction) {
