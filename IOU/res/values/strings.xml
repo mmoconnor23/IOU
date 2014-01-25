@@ -2,8 +2,10 @@
 <resources>
 
     <string name="app_name">IOU</string>
+    <string name="action_add_debtor">Add Debtor</string>
     <string name="action_settings">Settings</string>
     <string name="title_section1">IOU</string>
     <string name="title_section2">UOme</string>
+    
 
 </resources>

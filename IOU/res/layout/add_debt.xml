@@ -14,6 +14,12 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"        
         android:layout_alignParentTop="true"/>
+    <EditText
+        android:id="@+id/debtor_name"
+        android:textSize="14pt"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_alignParentTop="true"/>
     
 
     
