@@ -282,6 +282,8 @@ public class MainActivity extends FragmentActivity implements
 		    switch (item.getItemId()) {
 		        case R.id.action_add_debtor:
 		        	Intent intent = new Intent(getActivity(), AddDebtor.class);
+		        	int debtType = (getArguments().getInt(ARG_SECTION_NUMBER) == 1)? IOU : UOME;
+		        	intent.putExtra("debt_type", debtType);
 	                startActivityForResult(intent, ADD_DEBTOR_ACTIVITY);
 		            return true;
 		        default:
@@ -293,9 +295,14 @@ public class MainActivity extends FragmentActivity implements
 			// returned from add debtor activity
 			if (requestCode == ADD_DEBTOR_ACTIVITY && resultCode == RESULT_OK){
 				Log.i("onActivityResult","returned from adding debtor");
+				
 				/* add some data to our data structure */
-				debt_data_list.add((DebtEntry) data.getSerializableExtra("new_debt"));
-
+				if (data.getIntExtra("debt_type", 0) == IOU){
+					debt_data_list.add((DebtEntry) data.getSerializableExtra("new_debt"));
+				} else if (data.getIntExtra("debt_type", 0) == UOME){
+					debtors_data_list.add((DebtEntry) data.getSerializableExtra("new_debt"));
+				}
+				
 				/* notify adapter of data set changed */
 				debtAdapter.notifyDataSetChanged();
 			}
