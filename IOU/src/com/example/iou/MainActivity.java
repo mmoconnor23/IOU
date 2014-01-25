@@ -84,6 +84,21 @@ public class MainActivity extends FragmentActivity implements
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
+	
+	/*@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+	    // Handle presses on the action bar items
+	    switch (item.getItemId()) {
+	        case R.id.action_search:
+	            openSearch();
+	            return true;
+	        case R.id.action_settings:
+	            openSettings();
+	            return true;
+	        default:
+	            return super.onOptionsItemSelected(item);
+	    }
+	}*/
 
 	@Override
 	public void onTabSelected(ActionBar.Tab tab,
