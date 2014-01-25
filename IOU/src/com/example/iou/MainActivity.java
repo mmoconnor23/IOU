@@ -1,5 +1,6 @@
 package com.example.iou;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Locale;
 
@@ -34,8 +35,8 @@ public class MainActivity extends FragmentActivity implements
 	private final String DATA_LIST = "data_list";
 
 
-	public static final DebtEntry[] dummy_debt_data = {new DebtEntry("Melissa", "5", "Target"),
-													   new DebtEntry("Mallory", "20", "Dinner")};
+	public static final DebtEntry[] dummy_debt_data = {new DebtEntry("Melissa", "", "5", "Target"),
+													   new DebtEntry("Mallory", "", "20", "Dinner")};
 	
 	public ArrayList<DebtEntry> debt_data_list = new ArrayList<DebtEntry>();
 	
@@ -59,8 +60,8 @@ public class MainActivity extends FragmentActivity implements
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		
-		debt_data_list.add(new DebtEntry("Melissa", "5", "Target"));
-		debt_data_list.add(new DebtEntry("Mallory", "20", "Dinner"));
+		debt_data_list.add(new DebtEntry("Melissa", "", "5", "Target"));
+		debt_data_list.add(new DebtEntry("Mallory", "", "20", "Dinner"));
 
 		// Set up the action bar.
 		final ActionBar actionBar = getActionBar();
@@ -189,20 +190,30 @@ public class MainActivity extends FragmentActivity implements
 	 * Data class for storing a debt
 	 */
 	
-	public static class DebtEntry {
-		public String person;
-		public String amount;
-		public String description;
+	public static class DebtEntry implements Serializable {
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+		private String person;
+		private String phone;
+		private String amount;
+		private String description;
 		
 		// constructor
-		public DebtEntry(String p, String a, String d){
+		public DebtEntry(String p, String ph, String a, String d){
 			person = p;
+			phone = ph;
 			amount = a;
 			description = d;
 		}
 		
 		public String getPerson() {
 			return person;
+		}
+		
+		public String getPhone() {
+			return phone;
 		}
 		
 		public String getAmount() {
@@ -230,6 +241,7 @@ public class MainActivity extends FragmentActivity implements
 		public ArrayList<DebtEntry> dummy_debt_data;
 
 		public DummySectionFragment() {
+			Log.d("IOU", "trying to implement serializable");
 			
 		}
 
