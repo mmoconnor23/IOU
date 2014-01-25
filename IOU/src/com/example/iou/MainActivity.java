@@ -1,5 +1,6 @@
 package com.example.iou;
 
+import java.util.ArrayList;
 import java.util.Locale;
 
 import android.app.ActionBar;
@@ -13,6 +14,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.NavUtils;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -35,6 +37,8 @@ public class MainActivity extends FragmentActivity implements
 	public static final DebtEntry[] dummy_debt_data = {new DebtEntry("Melissa", "5", "Target"),
 													   new DebtEntry("Mallory", "20", "Dinner")};
 	
+	public ArrayList<DebtEntry> debt_data_list = new ArrayList<DebtEntry>();
+	
 	/**
 	 * The {@link android.support.v4.view.PagerAdapter} that will provide
 	 * fragments for each of the sections. We use a
@@ -54,6 +58,9 @@ public class MainActivity extends FragmentActivity implements
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		
+		debt_data_list.add(new DebtEntry("Melissa", "5", "Target"));
+		debt_data_list.add(new DebtEntry("Mallory", "20", "Dinner"));
 
 		// Set up the action bar.
 		final ActionBar actionBar = getActionBar();
@@ -150,7 +157,7 @@ public class MainActivity extends FragmentActivity implements
 			Fragment fragment = new DummySectionFragment();
 			Bundle args = new Bundle();
 			args.putInt(DummySectionFragment.ARG_SECTION_NUMBER, position + 1);
-			args.putSerializable(DATA_LIST, dummy_debt_data);
+			args.putSerializable(DATA_LIST, debt_data_list);
 			
 			fragment.setArguments(args);
 			return fragment;
@@ -199,11 +206,11 @@ public class MainActivity extends FragmentActivity implements
 		}
 		
 		public String getAmount() {
-			return person;
+			return amount;
 		}
 		
 		public String getDescription() {
-			return person;
+			return description;
 		}
 	}
 
@@ -220,7 +227,7 @@ public class MainActivity extends FragmentActivity implements
 		private final String DATA_LIST = "data_list";
 		
 		DebtAdapter debtAdapter;
-		public DebtEntry[] dummy_debt_data;
+		public ArrayList<DebtEntry> dummy_debt_data;
 
 		public DummySectionFragment() {
 			
@@ -240,7 +247,8 @@ public class MainActivity extends FragmentActivity implements
 				dummyTextView.setText("UOMe");
 			}
 			
-			dummy_debt_data = (DebtEntry[]) getArguments().getSerializable(DATA_LIST);
+			dummy_debt_data = (ArrayList<DebtEntry>) getArguments().getSerializable(DATA_LIST);
+			Log.d("onCreateView", "dummy_debt_data:" + dummy_debt_data.get(0).getDescription());
 			Context context = getActivity().getApplicationContext();
 			debtAdapter = new DebtAdapter(dummy_debt_data, context);
 			

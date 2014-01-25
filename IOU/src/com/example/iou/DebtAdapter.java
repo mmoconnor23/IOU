@@ -1,5 +1,7 @@
 package com.example.iou;
 
+import java.util.ArrayList;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,22 +26,22 @@ class ViewHolder {
 	 * Custom Adapter class for debt list
 	 */
 	public class DebtAdapter extends BaseAdapter {
-		private DebtEntry[] debts;
+		private ArrayList<DebtEntry> debts;
 		private final LayoutInflater mInflater;
 		final ViewHolder holder;
 		
-		public DebtAdapter(DebtEntry[] debt_entries, Context context){
+		public DebtAdapter(ArrayList<DebtEntry> debt_entries, Context context){
 			debts = debt_entries;
 			mInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			holder = new ViewHolder();
 		}
 		
 		public int getCount() {
-			return debts.length;
+			return debts.size();
 		}
 		
 		public DebtEntry getItem(int position){
-			return debts[position];
+			return debts.get(position);
 		}
 
 		@Override
@@ -54,10 +56,10 @@ class ViewHolder {
 			convertView = mInflater.inflate(R.layout.debt, null);
            	//holder = new ViewHolder();      
             holder.person = (TextView)convertView.findViewById(R.id.debt_name);
-            holder.person.setText((CharSequence) (debts[position].getPerson()));
+            holder.person.setText((CharSequence) (debts.get(position).getPerson()));
             holder.description = (TextView) convertView.findViewById(R.id.debt_description);
-            holder.description.setText((CharSequence) (debts[position].getAmount() 
-            											+ " - " + debts[position].getDescription()));
+            holder.description.setText((CharSequence) (debts.get(position).getAmount() 
+            											+ " - " + debts.get(position).getDescription()));
 			
             return convertView;
 		}
