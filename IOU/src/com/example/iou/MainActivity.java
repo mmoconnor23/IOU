@@ -1,9 +1,11 @@
 package com.example.iou;
 
+import java.util.ArrayList;
 import java.util.Locale;
 
 import android.app.ActionBar;
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -12,12 +14,16 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.NavUtils;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,7 +31,13 @@ public class MainActivity extends FragmentActivity implements
 		ActionBar.TabListener {
 
 	private final int ADD_DEBTOR_VIEW = 1;
+	private final String DATA_LIST = "data_list";
 
+
+	public static final DebtEntry[] dummy_debt_data = {new DebtEntry("Melissa", "5", "Target"),
+													   new DebtEntry("Mallory", "20", "Dinner")};
+	
+	public ArrayList<DebtEntry> debt_data_list = new ArrayList<DebtEntry>();
 	
 	/**
 	 * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -46,6 +58,9 @@ public class MainActivity extends FragmentActivity implements
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		
+		debt_data_list.add(new DebtEntry("Melissa", "5", "Target"));
+		debt_data_list.add(new DebtEntry("Mallory", "20", "Dinner"));
 
 		// Set up the action bar.
 		final ActionBar actionBar = getActionBar();
@@ -142,6 +157,8 @@ public class MainActivity extends FragmentActivity implements
 			Fragment fragment = new DummySectionFragment();
 			Bundle args = new Bundle();
 			args.putInt(DummySectionFragment.ARG_SECTION_NUMBER, position + 1);
+			args.putSerializable(DATA_LIST, debt_data_list);
+			
 			fragment.setArguments(args);
 			return fragment;
 		}
@@ -164,6 +181,38 @@ public class MainActivity extends FragmentActivity implements
 			return null;
 		}
 	}
+	
+
+
+	
+	/*
+	 * Data class for storing a debt
+	 */
+	
+	public static class DebtEntry {
+		public String person;
+		public String amount;
+		public String description;
+		
+		// constructor
+		public DebtEntry(String p, String a, String d){
+			person = p;
+			amount = a;
+			description = d;
+		}
+		
+		public String getPerson() {
+			return person;
+		}
+		
+		public String getAmount() {
+			return amount;
+		}
+		
+		public String getDescription() {
+			return description;
+		}
+	}
 
 	/**
 	 * A dummy fragment representing a section of the app, but that simply
@@ -175,19 +224,38 @@ public class MainActivity extends FragmentActivity implements
 		 * fragment.
 		 */
 		public static final String ARG_SECTION_NUMBER = "section_number";
+		private final String DATA_LIST = "data_list";
+		
+		DebtAdapter debtAdapter;
+		public ArrayList<DebtEntry> dummy_debt_data;
 
 		public DummySectionFragment() {
+			
 		}
 
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
+			
 			View rootView = inflater.inflate(R.layout.fragment_main_dummy,
 					container, false);
 			TextView dummyTextView = (TextView) rootView
 					.findViewById(R.id.section_label);
-			dummyTextView.setText(Integer.toString(getArguments().getInt(
-					ARG_SECTION_NUMBER)));
+			if (getArguments().getInt(ARG_SECTION_NUMBER) == 1) {
+				dummyTextView.setText("IOU");
+			} else if (getArguments().getInt(ARG_SECTION_NUMBER) == 2) {
+				dummyTextView.setText("UOMe");
+			}
+			
+			dummy_debt_data = (ArrayList<DebtEntry>) getArguments().getSerializable(DATA_LIST);
+			Log.d("onCreateView", "dummy_debt_data:" + dummy_debt_data.get(0).getDescription());
+			Context context = getActivity().getApplicationContext();
+			debtAdapter = new DebtAdapter(dummy_debt_data, context);
+			
+			ListView lv = (ListView) rootView.findViewById(R.id.debt_list);
+			lv.setItemsCanFocus(true);
+			lv.setAdapter(debtAdapter);
+			
 			return rootView;
 		}
 	}
