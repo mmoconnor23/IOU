@@ -181,6 +181,7 @@ public class MainActivity extends FragmentActivity implements
 			}
 			return null;
 		}
+		
 	}
 	
 
@@ -259,6 +260,8 @@ public class MainActivity extends FragmentActivity implements
 				dummyTextView.setText("UOMe");
 			}
 			
+			// it's hacky to not check what's actually in this serializable, but we can assume
+			// for the hackathon that it's definitely this and not a big deal
 			dummy_debt_data = (ArrayList<DebtEntry>) getArguments().getSerializable(DATA_LIST);
 			Log.d("onCreateView", "dummy_debt_data:" + dummy_debt_data.get(0).getDescription());
 			Context context = getActivity().getApplicationContext();

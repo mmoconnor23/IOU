@@ -3,13 +3,18 @@ package com.example.iou;
 import java.util.ArrayList;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.View.OnClickListener;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.iou.MainActivity.DebtEntry;
+
 
 /*
  * Custom ViewHolder for ListView
@@ -18,6 +23,7 @@ class ViewHolder {
 
     TextView person;
     TextView description;
+    Button venmo;
     
  }
 
@@ -60,6 +66,16 @@ class ViewHolder {
             holder.description = (TextView) convertView.findViewById(R.id.debt_description);
             holder.description.setText((CharSequence) (debts.get(position).getAmount() 
             											+ " - " + debts.get(position).getDescription()));
+            
+            holder.venmo = (Button) convertView.findViewById(R.id.venmo);
+            holder.venmo.setText("VENMO");
+        	// on Add button click: remove event from user events (since it was added before)
+            holder.venmo.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View view) {
+               	 Log.d("venmo button", "clicked on venmo button!");
+               }
+            });
 			
             return convertView;
 		}
