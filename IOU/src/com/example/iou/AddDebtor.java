@@ -13,17 +13,32 @@ import com.example.iou.MainActivity.DebtEntry;
 
 public class AddDebtor extends Activity {
 
+	private final static int IOU = 0;
+	private final static int UOME = 1;
+	
 	EditText name;
 	EditText phone;
 	EditText amt;
 	EditText description;
 	
 	Button button_finish;
+	int debtType;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_add_debtor);
+		
+		Intent intent = getIntent();
+		debtType = intent.getIntExtra("debt_type", 0);
+		
+		if (debtType == IOU) {
+			// put in iou msg
+			Log.i("ADD_DEBTOR", "in iou adder");
+		} else {
+			// put in uome msg
+			Log.i("ADD_DEBTOR", "in uome adder");
+		}
 		
 		button_finish = (Button) this.findViewById(R.id.button_finish_add_debt);
 	}
@@ -46,6 +61,7 @@ public class AddDebtor extends Activity {
 				amt.getText().toString(), description.getText().toString());
 		
 		Intent returnIntent = new Intent();
+		returnIntent.putExtra("debt_type", debtType);
 		returnIntent.putExtra("new_debt", debt);
 		setResult(RESULT_OK,returnIntent);   
 		finish();

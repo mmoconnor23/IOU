@@ -2,6 +2,7 @@ package com.example.iou;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Locale;
 
 import android.app.ActionBar;
@@ -13,33 +14,27 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.app.NavUtils;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class MainActivity extends FragmentActivity implements
 		ActionBar.TabListener {
 
-	private final int ADD_DEBTOR_VIEW = 1;
+	private final static int IOU = 0;
+	private final static int UOME = 1;
+	private final static int ADD_DEBTOR_ACTIVITY = 1;
 	private final String DATA_LIST = "data_list";
-
-
-	public static final DebtEntry[] dummy_debt_data = {new DebtEntry("Melissa", "", "5", "Target"),
-													   new DebtEntry("Mallory", "", "20", "Dinner")};
 	
-	public ArrayList<DebtEntry> debt_data_list = new ArrayList<DebtEntry>();
-	
+	public static ArrayList<DebtEntry> debt_data_list = new ArrayList<DebtEntry>(); //IOU
+	public static ArrayList<DebtEntry> debtors_data_list = new ArrayList<DebtEntry>(); //UOME
 	/**
 	 * The {@link android.support.v4.view.PagerAdapter} that will provide
 	 * fragments for each of the sections. We use a
@@ -61,7 +56,7 @@ public class MainActivity extends FragmentActivity implements
 		setContentView(R.layout.activity_main);
 		
 		debt_data_list.add(new DebtEntry("Melissa", "", "5", "Target"));
-		debt_data_list.add(new DebtEntry("Mallory", "", "20", "Dinner"));
+		debtors_data_list.add(new DebtEntry("Madison", "", "20", "Dinner"));
 
 		// Set up the action bar.
 		final ActionBar actionBar = getActionBar();
@@ -110,10 +105,6 @@ public class MainActivity extends FragmentActivity implements
 	public boolean onOptionsItemSelected(MenuItem item) {
 	    // Handle presses on the action bar items
 	    switch (item.getItemId()) {
-	        case R.id.action_add_debtor:
-	        	Intent i = new Intent(this, AddDebtor.class);
-	    		startActivity(i);
-	            return true;
 	        case R.id.action_settings:
 	            //openSettings();
 	            return true;
@@ -196,6 +187,7 @@ public class MainActivity extends FragmentActivity implements
 		 * 
 		 */
 		private static final long serialVersionUID = 1L;
+
 		private String person;
 		private String phone;
 		private String amount;
@@ -239,9 +231,9 @@ public class MainActivity extends FragmentActivity implements
 		private final String DATA_LIST = "data_list";
 		
 		DebtAdapter debtAdapter;
-		public ArrayList<DebtEntry> dummy_debt_data;
 
 		public DummySectionFragment() {
+			//this.setRetainInstance(true);  //should keep the fragment working on a phone rotation
 			Log.d("IOU", "trying to implement serializable");
 			
 		}
@@ -254,18 +246,16 @@ public class MainActivity extends FragmentActivity implements
 					container, false);
 			TextView dummyTextView = (TextView) rootView
 					.findViewById(R.id.section_label);
+			
+			Context context = getActivity().getApplicationContext();
+			
 			if (getArguments().getInt(ARG_SECTION_NUMBER) == 1) {
 				dummyTextView.setText("IOU");
+				debtAdapter = new DebtAdapter(debt_data_list, context);
 			} else if (getArguments().getInt(ARG_SECTION_NUMBER) == 2) {
 				dummyTextView.setText("UOMe");
+				debtAdapter = new DebtAdapter(debtors_data_list, context);
 			}
-			
-			// it's hacky to not check what's actually in this serializable, but we can assume
-			// for the hackathon that it's definitely this and not a big deal
-			dummy_debt_data = (ArrayList<DebtEntry>) getArguments().getSerializable(DATA_LIST);
-			Log.d("onCreateView", "dummy_debt_data:" + dummy_debt_data.get(0).getDescription());
-			Context context = getActivity().getApplicationContext();
-			debtAdapter = new DebtAdapter(dummy_debt_data, context);
 			
 			ListView lv = (ListView) rootView.findViewById(R.id.debt_list);
 			lv.setItemsCanFocus(true);
@@ -273,6 +263,51 @@ public class MainActivity extends FragmentActivity implements
 			
 			return rootView;
 		}
+		
+		@Override
+		public void onCreate(Bundle savedInstanceState) {
+			super.onCreate(savedInstanceState);
+			setHasOptionsMenu(true);
+		 }
+
+		
+		public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+			inflater.inflate(R.menu.add_debtor_button, menu);
+		}
+		
+		@Override
+		public boolean onOptionsItemSelected(MenuItem item) {
+		    // Handle presses on the action bar items
+		    switch (item.getItemId()) {
+		        case R.id.action_add_debtor:
+		        	Intent intent = new Intent(getActivity(), AddDebtor.class);
+		        	int debtType = (getArguments().getInt(ARG_SECTION_NUMBER) == 1)? IOU : UOME;
+		        	intent.putExtra("debt_type", debtType);
+	                startActivityForResult(intent, ADD_DEBTOR_ACTIVITY);
+		            return true;
+		        default:
+		            return super.onOptionsItemSelected(item);
+		    }
+		}
+		@Override
+		public void onActivityResult(int requestCode, int resultCode, Intent data){
+			// returned from add debtor activity
+			if (requestCode == ADD_DEBTOR_ACTIVITY && resultCode == RESULT_OK){
+				Log.i("onActivityResult","returned from adding debtor");
+				
+				/* add some data to our data structure */
+				if (data.getIntExtra("debt_type", 0) == IOU){
+					debt_data_list.add((DebtEntry) data.getSerializableExtra("new_debt"));
+				} else if (data.getIntExtra("debt_type", 0) == UOME){
+					debtors_data_list.add((DebtEntry) data.getSerializableExtra("new_debt"));
+				}
+				
+				/* notify adapter of data set changed */
+				debtAdapter.notifyDataSetChanged();
+			}
+		}
 	}
+	
+	
 
 }
