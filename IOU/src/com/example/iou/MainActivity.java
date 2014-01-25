@@ -32,10 +32,10 @@ public class MainActivity extends FragmentActivity implements
 	private final String DATA_LIST = "data_list";
 
 
-	public static final DebtEntry[] dummy_debt_data = {new DebtEntry("Melissa", "5", "Target"),
-													   new DebtEntry("Mallory", "20", "Dinner")};
+	public static final DebtEntry[] dummy_debt_data = {new DebtEntry("Melissa", "", "5", "Target"),
+													   new DebtEntry("Mallory", "", "20", "Dinner")};
 	
-	public ArrayList<DebtEntry> debt_data_list = new ArrayList<DebtEntry>();
+	public static ArrayList<DebtEntry> debt_data_list = new ArrayList<DebtEntry>();
 	
 	/**
 	 * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -57,8 +57,8 @@ public class MainActivity extends FragmentActivity implements
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		
-		debt_data_list.add(new DebtEntry("Melissa", "5", "Target"));
-		debt_data_list.add(new DebtEntry("Mallory", "20", "Dinner"));
+		debt_data_list.add(new DebtEntry("Melissa", "", "5", "Target"));
+		debt_data_list.add(new DebtEntry("Mallory", "", "20", "Dinner"));
 
 		// Set up the action bar.
 		final ActionBar actionBar = getActionBar();
@@ -188,19 +188,26 @@ public class MainActivity extends FragmentActivity implements
 		 * 
 		 */
 		private static final long serialVersionUID = 1L;
-		public String person;
-		public String amount;
-		public String description;
+
+		private String person;
+		private String phone;
+		private String amount;
+		private String description;
 		
 		// constructor
-		public DebtEntry(String p, String a, String d){
+		public DebtEntry(String p, String ph, String a, String d){
 			person = p;
+			phone = ph;
 			amount = a;
 			description = d;
 		}
 		
 		public String getPerson() {
 			return person;
+		}
+		
+		public String getPhone() {
+			return phone;
 		}
 		
 		public String getAmount() {
@@ -228,7 +235,8 @@ public class MainActivity extends FragmentActivity implements
 		public ArrayList<DebtEntry> dummy_debt_data;
 
 		public DummySectionFragment() {
-			this.setRetainInstance(true);
+			//this.setRetainInstance(true);
+			Log.d("IOU", "trying to implement serializable");
 			
 		}
 
@@ -281,18 +289,20 @@ public class MainActivity extends FragmentActivity implements
 		            return super.onOptionsItemSelected(item);
 		    }
 		}
-	}
-	
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data){
-		// returned from add debtor activity
-		if (requestCode == ADD_DEBTOR && resultCode == RESULT_OK){
-			Log.i("onActivityResult","returned from adding debtor");
-			/* add some data to our data structure */
+		@Override
+		public void onActivityResult(int requestCode, int resultCode, Intent data){
+			// returned from add debtor activity
+			if (requestCode == ADD_DEBTOR && resultCode == RESULT_OK){
+				Log.i("onActivityResult","returned from adding debtor");
+				/* add some data to our data structure */
+				debt_data_list.add((DebtEntry) data.getSerializableExtra("new_debt"));
 
-			/* notify adapter of data set changed */
-			//allAdapter.notifyDataSetChanged();
+				/* notify adapter of data set changed */
+				debtAdapter.notifyDataSetChanged();
+			}
 		}
 	}
+	
+	
 
 }

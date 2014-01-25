@@ -3,6 +3,7 @@ package com.example.iou;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
@@ -38,14 +39,15 @@ public class AddDebtor extends Activity {
 		/* grab data entered and save it as debt entry */
 		name = (EditText) this.findViewById(R.id.debtor_name);
 		phone = (EditText) this.findViewById(R.id.debtor_phone);
-		amt = (EditText) this.findViewById(R.id.amt_money_owed);
+		amt = (EditText) this.findViewById(R.id.amt_dollars);
 		description = (EditText) this.findViewById(R.id.debt_description);
 		
-		DebtEntry debt = new DebtEntry(null, null, null);
+		DebtEntry debt = new DebtEntry(name.getText().toString(), phone.getText().toString(), 
+				amt.getText().toString(), description.getText().toString());
 		
 		Intent returnIntent = new Intent();
 		returnIntent.putExtra("new_debt", debt);
-		setResult(RESULT_OK,returnIntent);     
+		setResult(RESULT_OK,returnIntent);   
 		finish();
 	}
 }
