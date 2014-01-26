@@ -6,7 +6,7 @@
 
     <uses-sdk
         android:minSdkVersion="14"
-        android:targetSdkVersion="17" />
+        android:targetSdkVersion="16" />
     <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
@@ -28,7 +28,9 @@
             android:label="@string/title_activity_add_debtor"
             android:screenOrientation="portrait" >
         </activity>
-        <activity android:name=".VenmoWebViewActivity" >
+        <activity 
+            android:name=".VenmoWebViewActivity"
+            android:screenOrientation="landscape">
         </activity>
         
     </application>
