@@ -29,6 +29,7 @@ class ViewHolder {
     TextView description;
     ImageButton venmo;
     Button pester;
+    Button delete;
     
  }
 
@@ -103,6 +104,15 @@ class ViewHolder {
             	}
             });
             
+            holder.delete = (Button) convertView.findViewById(R.id.delete);
+            holder.delete.setOnClickListener(new OnClickListener() {
+            	@Override
+            	public void onClick(View view) {
+            		Log.d("delete button", "clicked on delete button!");
+            		deleteDebt(view);
+            	}
+            });
+            
             convertView.setTag(position);
             
             //updates tag of the button view as we scroll
@@ -110,6 +120,7 @@ class ViewHolder {
             holder.description.setTag(position);
             holder.venmo.setTag(position);
             holder.pester.setTag(position);
+            holder.delete.setTag(position);
             
             holder.person.setFocusable(true);
             holder.description.setFocusable(true);
@@ -146,7 +157,12 @@ class ViewHolder {
 				
 		}
 		
-		
+		private void deleteDebt(View view) {
+			Toast.makeText(c, "Removing debt!", Toast.LENGTH_SHORT).show();
+			int tag = (Integer) view.getTag();
+			debts.remove(tag); // TODO hopefully with pointers this just works?
+			notifyDataSetChanged(); // possibly need this, not sure yet
+		}
 		
 
 	}
