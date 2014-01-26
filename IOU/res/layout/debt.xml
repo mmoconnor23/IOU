@@ -61,24 +61,27 @@
     
     <Button
         android:id="@+id/button_pester_or_remind"
-        android:textSize="14pt"
+        android:textSize="12pt"
         android:textStyle="bold"
-        android:background="@drawable/button_color"
+        android:textColor="#FFFFFF"
         android:layout_margin="10dp"
         android:layout_width="fill_parent"
-        android:layout_height="60dp"
-        android:layout_weight="1" />
+        android:padding="1dp"
+        android:layout_weight="0.75"
+        android:layout_height="wrap_content" />
     
     <Button
         android:id="@+id/delete"
         android:text="@string/delete"
-        android:textSize="14pt"
+        android:textColor="#FFFFFF"
+        android:textSize="12pt"
         android:textStyle="bold"
-        android:background="@drawable/button_color"
+		
+        android:background="@drawable/button_delete"
         android:layout_margin="10dp"
         android:layout_width="fill_parent"
-        android:layout_height="60dp"
-        android:layout_weight="1" />
+        android:layout_weight="1.5"
+        android:layout_height="wrap_content" />
     
 </LinearLayout>
 

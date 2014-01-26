@@ -101,24 +101,37 @@ class ViewHolder {
             Log.i("ADAPTER", tab+  "");
             if (tab == TAB_IOU){
             	holder.pesterOrRemind.setText(R.string.remind);
+                holder.pesterOrRemind.setBackgroundResource(R.drawable.button_remind);
+
+            	holder.pesterOrRemind.setOnClickListener(new OnClickListener() {
+                	@Override
+                	public void onClick(View view) {
+                		Log.d("remind button", "clicked on remind button!");
+                		
+                		//TODO: actually make a reminder...
+                		Toast.makeText(view.getContext(), "Made a reminder!", Toast.LENGTH_LONG).show();
+                	}
+                });
             } else {
             	holder.pesterOrRemind.setText(R.string.pester);
+            	holder.pesterOrRemind.setBackgroundResource(R.drawable.button_pester);
+            	holder.pesterOrRemind.setOnClickListener(new OnClickListener() {
+                	@Override
+                	public void onClick(View view) {
+                		Log.d("pester button", "clicked on pester button!");
+
+                		//TODO: find out if pester or remind!
+                		Intent i = new Intent((Activity) c, PesterSMSActivity.class);
+                		
+                		int tag = (Integer) view.getTag();
+            			DebtEntry debt = debts.get(tag);
+                		i.putExtra("debt", debt);
+                		view.getContext().startActivity(i);
+                	}
+                });
             }
             
-            holder.pesterOrRemind.setOnClickListener(new OnClickListener() {
-            	@Override
-            	public void onClick(View view) {
-            		Log.d("pester button", "clicked on pester button!");
-
-            		//TODO: find out if pester or remind!
-            		Intent i = new Intent((Activity) c, PesterSMSActivity.class);
-            		
-            		int tag = (Integer) view.getTag();
-        			DebtEntry debt = debts.get(tag);
-            		i.putExtra("debt", debt);
-            		view.getContext().startActivity(i);
-            	}
-            });
+            
             
             holder.delete = (Button) convertView.findViewById(R.id.delete);
             holder.delete.setOnClickListener(new OnClickListener() {
