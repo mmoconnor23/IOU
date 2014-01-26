@@ -7,11 +7,11 @@
     <uses-sdk
         android:minSdkVersion="14"
         android:targetSdkVersion="16" />
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.SEND_SMS">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.SEND_SMS" >
     </uses-permission>
-    <uses-permission android:name="android.permission.RECEIVE_SMS">
-    </uses-permission>
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
@@ -27,17 +27,19 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".AddDebtor"
+        <activity
+            android:name="com.example.iou.AddDebtor"
             android:label="@string/title_activity_add_debtor"
             android:screenOrientation="portrait" >
         </activity>
-        <activity 
-            android:name=".VenmoWebViewActivity"
-            android:screenOrientation="portrait">
+        <activity
+            android:name="com.example.iou.VenmoWebViewActivity"
+            android:screenOrientation="portrait" >
         </activity>
-        
+        <activity
+            android:name="com.example.iou.PesterSMSActivity"
+            android:label="@string/title_activity_pester_sms" >
+        </activity>
     </application>
-
-    
 
 </manifest>

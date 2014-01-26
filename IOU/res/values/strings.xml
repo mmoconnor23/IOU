@@ -16,10 +16,15 @@
     <string name="message_iou">Who do you owe?</string>
     <string name="message_uome">Who owes you?</string>
     <string name="pester">Pester</string>
+    <string name="remind">Create Reminder</string>
+    <string name="pester_header_message">Here is the pester message I\'ve generated for you!</string>
+
     <string-array name="debt_types_array">
         <item>IOU</item>
         <item>UOMe</item>
     </string-array>
-    
+
+    <string name="title_activity_pester_sms">PesterSMSActivity</string>
+    <string name="hello_world">Hello world!</string>
 
 </resources>
