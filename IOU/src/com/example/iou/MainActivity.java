@@ -2,14 +2,13 @@ package com.example.iou;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Locale;
 
-import com.example.iou.VenmoLibrary.VenmoResponse;
-
 import android.app.ActionBar;
+import android.app.AlertDialog;
 import android.app.FragmentTransaction;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -25,9 +24,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.iou.VenmoLibrary.VenmoResponse;
 
 public class MainActivity extends FragmentActivity implements
 		ActionBar.TabListener {
@@ -246,6 +248,7 @@ public class MainActivity extends FragmentActivity implements
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
 			
+			
 			View rootView = inflater.inflate(R.layout.fragment_main_dummy,
 					container, false);
 			TextView dummyTextView = (TextView) rootView
@@ -265,27 +268,6 @@ public class MainActivity extends FragmentActivity implements
 			lv.setItemsCanFocus(true);
 			lv.setAdapter(debtAdapter);
 			
-			lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-
-				@Override
-				public boolean onItemLongClick(AdapterView<?> parent, View v,
-						int pos, long id) {
-					onLongListItemClick(v, pos, id);
-					return false;
-				}
-				
-				protected void onLongListItemClick(View v, int pos,  long id) {
-					String name;
-					
-					if (getArguments().getInt(ARG_SECTION_NUMBER) == 1) {
-						name = debt_data_list.get(pos).person;
-					} else {
-						name = debtors_data_list.get(pos).person;
-					}
-					
-				    Log.i("listview onItemLongClick", "pos = " + pos + " name = " + name); 
-				} 
-			});
 			
 			return rootView;
 		}
@@ -294,8 +276,8 @@ public class MainActivity extends FragmentActivity implements
 		public void onCreate(Bundle savedInstanceState) {
 			super.onCreate(savedInstanceState);
 			setHasOptionsMenu(true);
-		 }
 
+		 }
 		
 		public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 			inflater.inflate(R.menu.add_debtor_button, menu);
