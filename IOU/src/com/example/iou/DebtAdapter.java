@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,9 +14,9 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.iou.MainActivity.DebtEntry;
-import com.example.iou.MainActivity.SectionsPagerAdapter;
 
 
 /*
@@ -29,6 +28,7 @@ class ViewHolder {
     TextView description;
     ImageButton venmo;
     Button pesterOrRemind;
+    Button delete;
     
  }
 
@@ -120,6 +120,15 @@ class ViewHolder {
             	}
             });
             
+            holder.delete = (Button) convertView.findViewById(R.id.delete);
+            holder.delete.setOnClickListener(new OnClickListener() {
+            	@Override
+            	public void onClick(View view) {
+            		Log.d("delete button", "clicked on delete button!");
+            		deleteDebt(view);
+            	}
+            });
+            
             convertView.setTag(position);
             
             //updates tag of the button view as we scroll
@@ -127,7 +136,7 @@ class ViewHolder {
             holder.description.setTag(position);
             holder.venmo.setTag(position);
             holder.pesterOrRemind.setTag(position);
-            
+            holder.delete.setTag(position);
             holder.person.setFocusable(true);
             holder.description.setFocusable(true);
             holder.person.requestFocus();
@@ -163,7 +172,12 @@ class ViewHolder {
 				
 		}
 		
-		
+		private void deleteDebt(View view) {
+			Toast.makeText(c, "Removing debt!", Toast.LENGTH_SHORT).show();
+			int tag = (Integer) view.getTag();
+			debts.remove(tag); // TODO hopefully with pointers this just works?
+			notifyDataSetChanged(); // possibly need this, not sure yet
+		}
 		
 
 	}
