@@ -28,7 +28,7 @@ class ViewHolder {
     TextView person;
     TextView description;
     ImageButton venmo;
-    Button pester;
+    Button pesterOrRemind;
     
  }
 
@@ -95,17 +95,17 @@ class ViewHolder {
 
             });
             
-            holder.pester = (Button) convertView.findViewById(R.id.button_pester_or_remind);
+            holder.pesterOrRemind = (Button) convertView.findViewById(R.id.button_pester_or_remind);
+            
+            /* anything to change in the adapter based on which tab, should go in this logic */
+            Log.i("ADAPTER", tab+  "");
             if (tab == TAB_IOU){
-            	holder.pester.setText(R.string.remind);
-            	holder.pester.setBackgroundColor(Color.parseColor("#00cc00"));
+            	holder.pesterOrRemind.setText(R.string.remind);
             } else {
-            	holder.pester.setText(R.string.pester);
-            	holder.pester.setBackgroundColor(Color.parseColor("#"));
-
+            	holder.pesterOrRemind.setText(R.string.pester);
             }
             
-            holder.pester.setOnClickListener(new OnClickListener() {
+            holder.pesterOrRemind.setOnClickListener(new OnClickListener() {
             	@Override
             	public void onClick(View view) {
             		Log.d("pester button", "clicked on pester button!");
@@ -126,7 +126,7 @@ class ViewHolder {
             holder.person.setTag(position);
             holder.description.setTag(position);
             holder.venmo.setTag(position);
-            holder.pester.setTag(position);
+            holder.pesterOrRemind.setTag(position);
             
             holder.person.setFocusable(true);
             holder.description.setFocusable(true);
