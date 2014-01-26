@@ -17,7 +17,7 @@
     <item android:state_pressed="true">
         <shape>
             <solid
-                android:color="#00cc00" />
+                android:color="#009900" />
             <corners
                 android:radius="3dp" />
             <padding
