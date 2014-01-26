@@ -171,7 +171,15 @@ class ViewHolder {
 			String recipient = debt.getPhone(); // needs username, phone number, or email; let's assume phone
 			String amount = debt.getAmount(); 
 			String note = debt.getDescription(); 
-			String txn = "pay"; // either "pay" or "charge"; let's say we can only pay others in this app
+			String txn;
+			if (tab == TAB_IOU) {
+				txn = "pay"; // either "pay" or "charge"; let's say we can only pay others in this app
+			} else if (tab == TAB_UOME) {
+				txn = "charge";
+			} else {
+				// something went wrong, don't want to falsely charge user or their friend
+				return;
+			}
 			
 			try { 
 				Intent venmoIntent = VenmoLibrary.openVenmoPayment(app_id, app_name, recipient, amount, note, txn);
