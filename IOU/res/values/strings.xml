@@ -4,8 +4,8 @@
     <string name="app_name">IOU</string>
     <string name="action_add_debtor">Add Debtor</string>
     <string name="action_settings">Settings</string>
-    <string name="title_section1">IOU</string>
-    <string name="title_section2">UOme</string>
+    <string name="iou">IOU</string>
+    <string name="uome">UOme</string>
     <string name="title_activity_add_debtor">AddDebtor</string>
     <string name="contact_name">Name</string>
     <string name="contact_phone">999&#8211;999&#8211;9999</string>
@@ -15,6 +15,10 @@
     <string name="finish">Finish</string>
     <string name="message_iou">Who do you owe?</string>
     <string name="message_uome">Who owes you?</string>
+    <string-array name="debt_types_array">
+        <item>IOU</item>
+        <item>UOMe</item>
+    </string-array>
     
 
 </resources>
