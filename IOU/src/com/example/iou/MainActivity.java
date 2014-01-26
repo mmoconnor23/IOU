@@ -199,6 +199,7 @@ public class MainActivity extends FragmentActivity implements
 		private String phone;
 		private String amount;
 		private String description;
+		private int pesters;
 		
 		// constructor
 		public DebtEntry(String p, String ph, String a, String d){
@@ -206,6 +207,7 @@ public class MainActivity extends FragmentActivity implements
 			phone = ph;
 			amount = a;
 			description = d;
+			pesters = 0;
 		}
 		
 		public String getPerson() {
@@ -222,6 +224,14 @@ public class MainActivity extends FragmentActivity implements
 		
 		public String getDescription() {
 			return description;
+		}
+		
+		public int getPesters() {
+			return pesters;
+		}
+		
+		public void upPesters() {
+			pesters += 1;
 		}
 	}
 
