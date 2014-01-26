@@ -237,6 +237,7 @@ public class MainActivity extends FragmentActivity implements
 		public static final String ARG_SECTION_NUMBER = "section_number";
 		
 		DebtAdapter debtAdapter;
+		ArrayList<DebtEntry> debt_list;
 
 		public DummySectionFragment() {
 			//this.setRetainInstance(true);  //should keep the fragment working on a phone rotation
@@ -258,11 +259,12 @@ public class MainActivity extends FragmentActivity implements
 			
 			if (getArguments().getInt(ARG_SECTION_NUMBER) == 1) {
 				dummyTextView.setText("IOU");
-				debtAdapter = new DebtAdapter(debt_data_list, context);
+				debt_list = debt_data_list;
 			} else if (getArguments().getInt(ARG_SECTION_NUMBER) == 2) {
 				dummyTextView.setText("UOMe");
-				debtAdapter = new DebtAdapter(debtors_data_list, context);
+				debt_list = debtors_data_list;
 			}
+			debtAdapter = new DebtAdapter(debt_list, context);
 			
 			ListView lv = (ListView) rootView.findViewById(R.id.debt_list);
 			lv.setItemsCanFocus(true);
