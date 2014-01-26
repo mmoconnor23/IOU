@@ -27,6 +27,7 @@ class ViewHolder {
     TextView person;
     TextView description;
     ImageButton venmo;
+    Button pester;
     
  }
 
@@ -82,6 +83,14 @@ class ViewHolder {
                	 doVenmo(view);
                }
 
+            });
+            
+            holder.pester = (Button) convertView.findViewById(R.id.pester);
+            holder.pester.setOnClickListener(new OnClickListener() {
+            	@Override
+            	public void onClick(View view) {
+            		Log.d("pester button", "clicked on pester button!");
+            	}
             });
             
             convertView.setTag(position);
