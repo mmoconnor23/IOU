@@ -8,7 +8,6 @@
 <LinearLayout
     android:layout_width="wrap_content"
 	android:layout_height="wrap_content"
-	android:layout_toLeftOf="@+id/add"
 	android:orientation="vertical">
 
     <!-- TextView for name of debtor, aligned to top of ListView item -->
@@ -16,6 +15,8 @@
         android:id="@+id/debt_name"
         android:textSize="14pt"
         android:textStyle="bold"
+                android:focusable="false"
+        
         android:layout_width="fill_parent"
         android:layout_height="wrap_content" />
     
@@ -24,6 +25,8 @@
         android:id="@+id/debt_description"
         android:textSize="12pt"
         android:maxLines="2"
+                android:focusable="false"
+        
         android:layout_width="fill_parent"
         android:layout_height="wrap_content" />
     
@@ -35,6 +38,7 @@
         android:layout_alignParentRight="true"
         android:layout_width="40dp"
         android:layout_height="40dp"
+        android:focusable="false"
         android:layout_centerVertical="true" />
     
 </RelativeLayout>
