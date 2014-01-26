@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,7 +26,7 @@ class ViewHolder {
 
     TextView person;
     TextView description;
-    Button venmo;
+    ImageButton venmo;
     
  }
 
@@ -71,7 +72,7 @@ class ViewHolder {
             holder.description.setText((CharSequence) (debts.get(position).getAmount() 
             											+ " - " + debts.get(position).getDescription()));
             
-            holder.venmo = (Button) convertView.findViewById(R.id.venmo);
+            holder.venmo = (ImageButton) convertView.findViewById(R.id.venmo);
         	// on Add button click: remove event from user events (since it was added before)
             holder.venmo.setOnClickListener(new OnClickListener() {
                 @Override

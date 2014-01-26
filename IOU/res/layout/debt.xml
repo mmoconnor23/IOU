@@ -8,7 +8,6 @@
 <LinearLayout
     android:layout_width="wrap_content"
 	android:layout_height="wrap_content"
-	android:layout_toLeftOf="@+id/add"
 	android:orientation="vertical">
 
     <!-- TextView for name of debtor, aligned to top of ListView item -->
@@ -29,12 +28,19 @@
     
     </LinearLayout>
     
-    <Button
+    <ImageButton
         android:id="@+id/venmo"
-        android:background="@drawable/venmo_icon"
+        android:background="#3d95ce"
+        android:src="@drawable/button_venmo"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
         android:layout_alignParentRight="true"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_centerVertical="true" />
+        android:layout_width="120dp"
+        android:layout_height="50dp"
+        android:layout_centerVertical="true"
+        android:scaleType="fitCenter"
+        android:adjustViewBounds="true" />
     
 </RelativeLayout>
