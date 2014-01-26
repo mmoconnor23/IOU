@@ -55,11 +55,9 @@
 </RelativeLayout>
     
     <Button
-        android:id="@+id/pester"
-        android:text="@string/pester"
+        android:id="@+id/button_pester_or_remind"
         android:textSize="14pt"
         android:textStyle="bold"
-        android:background="#00cc00"
         android:layout_width="fill_parent"
         android:layout_height="60dp" />
 

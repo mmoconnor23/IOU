@@ -5,19 +5,19 @@ import java.util.ArrayList;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.telephony.SmsManager;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.iou.MainActivity.DebtEntry;
+import com.example.iou.MainActivity.SectionsPagerAdapter;
 
 
 /*
@@ -42,13 +42,20 @@ class ViewHolder {
 		final ViewHolder holder;
 		private Context c;
 		
+		private int tab;
+		
+		private static int TAB_IOU = 1;
+		private static int TAB_UOME = 2;
+		
+		
 		private static int PESTER_SMS_ACTIVITY = 3;
 		
-		public DebtAdapter(ArrayList<DebtEntry> debt_entries, Context context){
+		public DebtAdapter(ArrayList<DebtEntry> debt_entries, Context context, int curTab){
 			c = context;
 			debts = debt_entries;
 			mInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			holder = new ViewHolder();
+			tab = curTab;
 		}
 		
 		public int getCount() {
@@ -88,12 +95,22 @@ class ViewHolder {
 
             });
             
-            holder.pester = (Button) convertView.findViewById(R.id.pester);
+            holder.pester = (Button) convertView.findViewById(R.id.button_pester_or_remind);
+            if (tab == TAB_IOU){
+            	holder.pester.setText(R.string.remind);
+            	holder.pester.setBackgroundColor(Color.parseColor("#00cc00"));
+            } else {
+            	holder.pester.setText(R.string.pester);
+            	holder.pester.setBackgroundColor(Color.parseColor("#"));
+
+            }
+            
             holder.pester.setOnClickListener(new OnClickListener() {
             	@Override
             	public void onClick(View view) {
             		Log.d("pester button", "clicked on pester button!");
 
+            		//TODO: find out if pester or remind!
             		Intent i = new Intent((Activity) c, PesterSMSActivity.class);
             		
             		int tag = (Integer) view.getTag();

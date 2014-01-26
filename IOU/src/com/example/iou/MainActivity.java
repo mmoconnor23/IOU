@@ -256,12 +256,14 @@ public class MainActivity extends FragmentActivity implements
 			
 			Context context = getActivity();
 			
-			if (getArguments().getInt(ARG_SECTION_NUMBER) == 1) {
+			int tab = getArguments().getInt(ARG_SECTION_NUMBER);
+			if (tab == 1) {
 				dummyTextView.setText("IOU");
-				debtAdapter = new DebtAdapter(debt_data_list, context);
-			} else if (getArguments().getInt(ARG_SECTION_NUMBER) == 2) {
+				debtAdapter = new DebtAdapter(debt_data_list, context, tab);
+				
+			} else if (tab == 2) {
 				dummyTextView.setText("UOMe");
-				debtAdapter = new DebtAdapter(debtors_data_list, context);
+				debtAdapter = new DebtAdapter(debtors_data_list, context, tab);
 			}
 			
 			ListView lv = (ListView) rootView.findViewById(R.id.debt_list);
