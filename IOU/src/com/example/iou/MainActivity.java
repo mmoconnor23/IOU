@@ -60,8 +60,8 @@ public class MainActivity extends FragmentActivity implements
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		
-		debt_data_list.add(new DebtEntry("Melissa", "", "5", "Target"));
-		debtors_data_list.add(new DebtEntry("Madison", "", "20", "Dinner"));
+		debt_data_list.add(new DebtEntry("Melissa", "9739309163", "5", "Target"));
+		debtors_data_list.add(new DebtEntry("Madison", "5037522173", "20", "Dinner"));
 
 		// Set up the action bar.
 		final ActionBar actionBar = getActionBar();
