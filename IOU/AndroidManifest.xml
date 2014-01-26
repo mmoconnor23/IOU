@@ -28,7 +28,9 @@
             android:label="@string/title_activity_add_debtor"
             android:screenOrientation="portrait" >
         </activity>
-        <activity android:name=".VenmoWebViewActivity" >
+        <activity 
+            android:name=".VenmoWebViewActivity"
+            android:screenOrientation="landscape">
         </activity>
         
     </application>

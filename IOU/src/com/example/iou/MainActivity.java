@@ -251,7 +251,7 @@ public class MainActivity extends FragmentActivity implements
 			TextView dummyTextView = (TextView) rootView
 					.findViewById(R.id.section_label);
 			
-			Context context = getActivity().getApplicationContext();
+			Context context = getActivity();
 			
 			if (getArguments().getInt(ARG_SECTION_NUMBER) == 1) {
 				dummyTextView.setText("IOU");
