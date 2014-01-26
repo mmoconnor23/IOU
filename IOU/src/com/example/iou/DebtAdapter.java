@@ -48,7 +48,7 @@ class ViewHolder {
 		private static int TAB_UOME = 2;
 		
 		
-		private static int PESTER_SMS_ACTIVITY = 3;
+		private static int PESTER_ACTIVITY = 3;
 		
 		public DebtAdapter(ArrayList<DebtEntry> debt_entries, Context context, int curTab){
 			c = context;
@@ -121,12 +121,13 @@ class ViewHolder {
                 		Log.d("pester button", "clicked on pester button!");
 
                 		//TODO: find out if pester or remind!
-                		Intent i = new Intent((Activity) c, PesterSMSActivity.class);
+                		Intent i = new Intent(((Activity) c), PesterSMSActivity.class);
                 		
                 		int tag = (Integer) view.getTag();
             			DebtEntry debt = debts.get(tag);
                 		i.putExtra("debt", debt);
-                		view.getContext().startActivity(i);
+                		i.putExtra("id_num", tag);
+                		((Activity) c).startActivityForResult(i, PESTER_ACTIVITY);
                 	}
                 });
             }
@@ -198,6 +199,10 @@ class ViewHolder {
 			int tag = (Integer) view.getTag();
 			debts.remove(tag); // TODO hopefully with pointers this just works?
 			notifyDataSetChanged(); // possibly need this, not sure yet
+		}
+		
+		public void onActivityResult(int requestCode, int resultCode, Intent data){
+			Log.i("BACK IN ADAPTER", "asdf");
 		}
 		
 

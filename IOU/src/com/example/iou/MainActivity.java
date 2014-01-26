@@ -38,6 +38,7 @@ public class MainActivity extends FragmentActivity implements
 	private final static int UOME = 1;
 	private final static int ADD_DEBTOR_ACTIVITY = 1;
 	private final static int VENMO_ACTIVITY = 2;
+	private final static int PESTER_ACTIVITY = 3;
 	private final String DATA_LIST = "data_list";
 	
 	public static ArrayList<DebtEntry> debt_data_list = new ArrayList<DebtEntry>(); //IOU
@@ -306,8 +307,10 @@ public class MainActivity extends FragmentActivity implements
 		            return super.onOptionsItemSelected(item);
 		    }
 		}
-		@Override
+		
 		public void onActivityResult(int requestCode, int resultCode, Intent data){
+			super.onActivityResult(requestCode, resultCode, data);
+			Log.i("BACK IN MAIN", "asdf");
 			// returned from add debtor activity
 			if (requestCode == ADD_DEBTOR_ACTIVITY && resultCode == RESULT_OK){
 				Log.i("onActivityResult","returned from adding debtor");
@@ -349,6 +352,19 @@ public class MainActivity extends FragmentActivity implements
 					Toast.makeText(getActivity(), "Transaction cancelled", Toast.LENGTH_SHORT).show();
 					// don't delete item
 	            }
+			} else {
+				
+
+				if (requestCode == PESTER_ACTIVITY && resultCode == RESULT_OK){
+			}
+				int pos = data.getIntExtra("id_num", -1); // hacky
+				
+
+				if (pos != -1){
+					debtors_data_list.get(pos).upPesters();
+					Log.i("BACK IN MAIN", ""+debtors_data_list.get(pos).getPesters());
+				}
+				
 			}
 		}
 	}
