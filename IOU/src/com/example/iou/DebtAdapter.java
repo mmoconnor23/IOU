@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.telephony.SmsManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -90,6 +91,7 @@ class ViewHolder {
             	@Override
             	public void onClick(View view) {
             		Log.d("pester button", "clicked on pester button!");
+            		pester(view);
             	}
             });
             
@@ -99,6 +101,7 @@ class ViewHolder {
             holder.person.setTag(position);
             holder.description.setTag(position);
             holder.venmo.setTag(position);
+            holder.pester.setTag(position);
             
             holder.person.setFocusable(true);
             holder.description.setFocusable(true);
@@ -133,6 +136,23 @@ class ViewHolder {
 				a.startActivityForResult(venmoIntent, VENMO_ACTIVITY); 
 			}
 				
+		}
+		
+		private void pester(View v) {
+			Log.d("in pester", "pester pester pester");
+			int tag = (Integer) v.getTag();
+			DebtEntry debt = debts.get(tag);
+			
+			String name = debt.getPerson();
+			String phone = debt.getPhone();
+			String amount = debt.getAmount(); 
+			String note = debt.getDescription(); 
+			
+			SmsManager sm = SmsManager.getDefault();
+			String msg = "U owe me moneyz";
+			sm.sendTextMessage("5556", null, msg, null, null); // first param should be phone
+			
+			Toast.makeText(c, "Pestering " + name + "...", Toast.LENGTH_SHORT).show();
 		}
 		
 
