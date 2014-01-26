@@ -262,17 +262,13 @@ public class MainActivity extends FragmentActivity implements
 			
 			View rootView = inflater.inflate(R.layout.fragment_main_dummy,
 					container, false);
-			TextView dummyTextView = (TextView) rootView
-					.findViewById(R.id.section_label);
 			
 			Context context = getActivity();
 			
 			int tab = getArguments().getInt(ARG_SECTION_NUMBER);
 			if (tab == 1) {
-				dummyTextView.setText("IOU");
 				debt_list = debt_data_list;
-			} else if (tab == 2) {
-				dummyTextView.setText("UOMe");
+			} else {
 				debt_list = debtors_data_list;
 			}
 			debtAdapter = new DebtAdapter(debt_list, context, tab);

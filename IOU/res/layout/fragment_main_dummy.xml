@@ -10,16 +10,9 @@
 
     <!-- We'll add the title string (IOU or UOMe) in the Java file
          Can easily change text color, background color or image, etc.  -->
-    <TextView
-        android:id="@+id/section_label"
-        android:layout_width="fill_parent"
-        android:text="hello world, i owe you money"
-        android:textSize="14pt"
-        android:layout_height="wrap_content" />
-    
+
     <ListView   
             android:id="@+id/debt_list" 
-            android:layout_below="@id/section_label"
             android:layout_height="fill_parent" 
             android:layout_width="fill_parent"
             android:divider="#000000"
