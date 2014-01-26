@@ -42,6 +42,8 @@ class ViewHolder {
 		final ViewHolder holder;
 		private Context c;
 		
+		private static int PESTER_SMS_ACTIVITY = 3;
+		
 		public DebtAdapter(ArrayList<DebtEntry> debt_entries, Context context){
 			c = context;
 			debts = debt_entries;
@@ -71,7 +73,7 @@ class ViewHolder {
             holder.person = (TextView)convertView.findViewById(R.id.debt_name);
             holder.person.setText((CharSequence) (debts.get(position).getPerson()));
             holder.description = (TextView) convertView.findViewById(R.id.debt_description);
-            holder.description.setText((CharSequence) (debts.get(position).getAmount() 
+            holder.description.setText((CharSequence) ("$" + debts.get(position).getAmount() 
             											+ " - " + debts.get(position).getDescription()));
             
             holder.venmo = (ImageButton) convertView.findViewById(R.id.venmo);
@@ -91,7 +93,13 @@ class ViewHolder {
             	@Override
             	public void onClick(View view) {
             		Log.d("pester button", "clicked on pester button!");
-            		pester(view);
+
+            		Intent i = new Intent((Activity) c, PesterSMSActivity.class);
+            		
+            		int tag = (Integer) view.getTag();
+        			DebtEntry debt = debts.get(tag);
+            		i.putExtra("debt", debt);
+            		view.getContext().startActivity(i);
             	}
             });
             
@@ -138,22 +146,7 @@ class ViewHolder {
 				
 		}
 		
-		private void pester(View v) {
-			Log.d("in pester", "pester pester pester");
-			int tag = (Integer) v.getTag();
-			DebtEntry debt = debts.get(tag);
-			
-			String name = debt.getPerson();
-			String phone = debt.getPhone();
-			String amount = debt.getAmount(); 
-			String note = debt.getDescription(); 
-			
-			SmsManager sm = SmsManager.getDefault();
-			String msg = "U owe me moneyz";
-			sm.sendTextMessage("5556", null, msg, null, null); // first param should be phone
-			
-			Toast.makeText(c, "Pestering " + name + "...", Toast.LENGTH_SHORT).show();
-		}
+		
 		
 
 	}
