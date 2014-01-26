@@ -20,7 +20,7 @@ public class VenmoWebViewActivity extends Activity {
         @Override
         public void onCreate(Bundle icicle) {
                 super.onCreate(icicle);
-                requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
+                //requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
                 setContentView(R.layout.venmo_webview);
                 
                 mUrl = getIntent().getExtras().getString("url");
