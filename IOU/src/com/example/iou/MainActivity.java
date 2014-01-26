@@ -24,6 +24,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -263,6 +264,28 @@ public class MainActivity extends FragmentActivity implements
 			ListView lv = (ListView) rootView.findViewById(R.id.debt_list);
 			lv.setItemsCanFocus(true);
 			lv.setAdapter(debtAdapter);
+			
+			lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+
+				@Override
+				public boolean onItemLongClick(AdapterView<?> parent, View v,
+						int pos, long id) {
+					onLongListItemClick(v, pos, id);
+					return false;
+				}
+				
+				protected void onLongListItemClick(View v, int pos,  long id) {
+					String name;
+					
+					if (getArguments().getInt(ARG_SECTION_NUMBER) == 1) {
+						name = debt_data_list.get(pos).person;
+					} else {
+						name = debtors_data_list.get(pos).person;
+					}
+					
+				    Log.i("listview onItemLongClick", "pos = " + pos + " name = " + name); 
+				} 
+			});
 			
 			return rootView;
 		}
