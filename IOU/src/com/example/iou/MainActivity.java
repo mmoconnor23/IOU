@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
 
+import com.example.iou.VenmoLibrary.VenmoResponse;
+
 import android.app.ActionBar;
 import android.app.FragmentTransaction;
 import android.content.Context;
@@ -24,6 +26,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends FragmentActivity implements
 		ActionBar.TabListener {
@@ -31,6 +34,7 @@ public class MainActivity extends FragmentActivity implements
 	private final static int IOU = 0;
 	private final static int UOME = 1;
 	private final static int ADD_DEBTOR_ACTIVITY = 1;
+	private final static int VENMO_ACTIVITY = 2;
 	private final String DATA_LIST = "data_list";
 	
 	public static ArrayList<DebtEntry> debt_data_list = new ArrayList<DebtEntry>(); //IOU
@@ -176,7 +180,7 @@ public class MainActivity extends FragmentActivity implements
 	}
 	
 
-
+	
 	
 	/*
 	 * Data class for storing a debt
@@ -228,7 +232,6 @@ public class MainActivity extends FragmentActivity implements
 		 * fragment.
 		 */
 		public static final String ARG_SECTION_NUMBER = "section_number";
-		private final String DATA_LIST = "data_list";
 		
 		DebtAdapter debtAdapter;
 
@@ -304,10 +307,36 @@ public class MainActivity extends FragmentActivity implements
 				
 				/* notify adapter of data set changed */
 				debtAdapter.notifyDataSetChanged();
+			} 
+			// returned from venmo activity
+			else if (requestCode == VENMO_ACTIVITY) {
+				Log.i("onActivityResult", "returned from venmo");
+				if(resultCode == RESULT_OK) {
+	                String signedrequest = data.getStringExtra("signedrequest");
+	                if(signedrequest != null) {
+	                    VenmoResponse response = (new VenmoLibrary()).validateVenmoPaymentResponse(signedrequest, "J7mezsbJSANyk28VvxPV5aUQZugzMfTG");
+	                    if(response.getSuccess().equals("1")) {
+	                        //Payment successful.  Use data from response object to display a success message
+	                        String description = response.getNote();
+	                        String amount = response.getAmount();
+	                        String id = response.getPaymentId();
+	                        Toast.makeText(getActivity(), id + ": Paid " + amount + " for " + description, Toast.LENGTH_SHORT).show();
+	                        // TODO remove corresponding item from listview
+	                    }
+	                }
+	                else {
+	                    String error_message = data.getStringExtra("error_message");
+	                    //An error occurred.  Make sure to display the error_message to the user
+	                    Toast.makeText(getActivity(), "Error occurred during transaction: " + error_message, Toast.LENGTH_SHORT).show();
+	                    // don't delete item
+	                }
+				} else if(resultCode == RESULT_CANCELED) {
+	                //The user cancelled the payment
+					Toast.makeText(getActivity(), "Transaction cancelled", Toast.LENGTH_SHORT).show();
+					// don't delete item
+	            }
 			}
 		}
 	}
-	
-	
 
 }
