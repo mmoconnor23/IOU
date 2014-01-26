@@ -173,7 +173,7 @@ class ViewHolder {
 			String note = debt.getDescription(); 
 			String txn;
 			if (tab == TAB_IOU) {
-				txn = "pay"; // either "pay" or "charge"; let's say we can only pay others in this app
+				txn = "pay"; // either "pay" or "charge"
 			} else if (tab == TAB_UOME) {
 				txn = "charge";
 			} else {
