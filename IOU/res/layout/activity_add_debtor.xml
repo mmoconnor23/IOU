@@ -8,11 +8,20 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".AddDebtor" >
 
+    <Spinner 
+        android:id="@+id/debt_type_spinner"
+        android:layout_alignParentTop="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        />
+
+        
+    
     <EditText
         android:id="@+id/debtor_name"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
+        android:layout_below="@id/debt_type_spinner"
         android:inputType="text"
         android:textSize="14pt" />
     <EditText
