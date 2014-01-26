@@ -16,6 +16,7 @@
     <string name="message_iou">Who do you owe?</string>
     <string name="message_uome">Who owes you?</string>
     <string name="pester">Pester</string>
+    <string name="delete">Delete</string>
     <string-array name="debt_types_array">
         <item>IOU</item>
         <item>UOMe</item>
