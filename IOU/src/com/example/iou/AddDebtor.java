@@ -37,6 +37,8 @@ public class AddDebtor extends Activity{
 		Intent intent = getIntent();
 		debtType = intent.getIntExtra("debt_type", 0);
 		
+		name = (EditText) findViewById(R.id.debtor_name);
+		
 		Spinner spinner = (Spinner) findViewById(R.id.debt_type_spinner);
 		// Create an ArrayAdapter using the string array and a default spinner layout
 		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.debt_types_array, 
@@ -52,9 +54,16 @@ public class AddDebtor extends Activity{
 				// An item was selected. You can retrieve the selected item using
 		        // parent.getItemAtPosition(pos)
 		    	String p = (String) parent.getItemAtPosition(pos);
+		    	Log.i("ADDDEBTOR", ""+ pos);
 		    	//Object item = av.getSelectedItem();
 		    	Log.i("ADD_DEBTOR", p);
-						
+		    	if (pos == IOU){
+		    		name.setHint(R.string.message_iou);
+		    		debtType = IOU;
+		    	} else {
+		    		name.setHint(R.string.message_uome);
+		    		debtType = UOME;
+		    	}
 			}
 
 			@Override
