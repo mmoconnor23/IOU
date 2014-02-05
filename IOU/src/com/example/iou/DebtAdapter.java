@@ -80,8 +80,15 @@ class ViewHolder {
             holder.person = (TextView)convertView.findViewById(R.id.debt_name);
             holder.person.setText((CharSequence) (debts.get(position).getPerson()));
             holder.description = (TextView) convertView.findViewById(R.id.debt_description);
-            holder.description.setText((CharSequence) ("$" + debts.get(position).getAmount() 
+            
+            /* handle null values gracefully */
+            if (debts.get(position).getDescription() == null){
+            	holder.description.setText((CharSequence) ("$" + debts.get(position).getAmount() 
+						+ " - Unspecified"));
+            } else {
+            	holder.description.setText((CharSequence) ("$" + debts.get(position).getAmount() 
             											+ " - " + debts.get(position).getDescription()));
+            }
             
             holder.venmo = (ImageButton) convertView.findViewById(R.id.venmo);
         	// on Add button click: remove event from user events (since it was added before)

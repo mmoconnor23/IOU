@@ -101,6 +101,8 @@ public class AddDebtor extends Activity{
 		phone = (EditText) this.findViewById(R.id.debtor_phone);
 		amt = (EditText) this.findViewById(R.id.amt_dollars);
 		description = (EditText) this.findViewById(R.id.debt_description);
+		
+		
 				
 		/* validate fields */
 		EditText[] requiredFields = {name, amt};
@@ -114,9 +116,18 @@ public class AddDebtor extends Activity{
 		}
 		
 		if (! errors){
+			
 			DebtEntry debt = new DebtEntry(name.getText().toString(), phone.getText().toString(), 
 				amt.getText().toString(), description.getText().toString());
-		
+
+			/* handle other non-required fields gracefully */
+			if (debt.getDescription().equals("")){
+				debt.setDescription(null);
+			}
+			if (debt.getPhone().equals("")){
+				debt.setPhone(null);
+			}
+			
 			Intent returnIntent = new Intent();
 			returnIntent.putExtra("debt_type", debtType);
 			returnIntent.putExtra("new_debt", debt);

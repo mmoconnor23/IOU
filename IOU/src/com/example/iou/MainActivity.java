@@ -234,6 +234,18 @@ public class MainActivity extends FragmentActivity implements
 		public void upPesters() {
 			pesters += 1;
 		}
+		public void setPerson(String name){
+			person = name;
+		}
+		public void setAmount(String newAmount){
+			amount = newAmount;
+		}
+		public void setDescription(String descrip){
+			description = descrip;
+		}
+		public void setPhone(String phoneNumber){
+			phone = phoneNumber;
+		}
 	}
 
 	/**
@@ -317,6 +329,9 @@ public class MainActivity extends FragmentActivity implements
 				
 				/* add some data to our data structure */
 				DebtEntry newEntry = (DebtEntry) data.getSerializableExtra("new_debt");
+				if (newEntry.description == null){
+					Log.i("MAIN", "doing the right thing");
+				}
 				if (data.getIntExtra("debt_type", 0) == IOU){
 					debt_data_list.add(newEntry);
 				} else if (data.getIntExtra("debt_type", 0) == UOME){
