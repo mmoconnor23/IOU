@@ -316,10 +316,11 @@ public class MainActivity extends FragmentActivity implements
 				Log.i("onActivityResult","returned from adding debtor");
 				
 				/* add some data to our data structure */
+				DebtEntry newEntry = (DebtEntry) data.getSerializableExtra("new_debt");
 				if (data.getIntExtra("debt_type", 0) == IOU){
-					debt_data_list.add((DebtEntry) data.getSerializableExtra("new_debt"));
+					debt_data_list.add(newEntry);
 				} else if (data.getIntExtra("debt_type", 0) == UOME){
-					debtors_data_list.add((DebtEntry) data.getSerializableExtra("new_debt"));
+					debtors_data_list.add(newEntry);
 				}
 				
 				/* notify adapter of data set changed */

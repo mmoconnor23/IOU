@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
+import android.widget.Toast;
 
 import com.example.iou.MainActivity.DebtEntry;
 
@@ -100,15 +101,30 @@ public class AddDebtor extends Activity{
 		phone = (EditText) this.findViewById(R.id.debtor_phone);
 		amt = (EditText) this.findViewById(R.id.amt_dollars);
 		description = (EditText) this.findViewById(R.id.debt_description);
+				
+		/* validate fields */
+		EditText[] requiredFields = {name, amt};
+		boolean errors = false; // flag if errors exist
 		
-		DebtEntry debt = new DebtEntry(name.getText().toString(), phone.getText().toString(), 
+		for (EditText field : requiredFields){
+			if (field.getText().toString().equals("")){						
+				field.setError(((String) field.getTag()).concat(" field can't be empty"));
+				errors = true;
+			}
+		}
+		
+		if (! errors){
+			DebtEntry debt = new DebtEntry(name.getText().toString(), phone.getText().toString(), 
 				amt.getText().toString(), description.getText().toString());
 		
-		Intent returnIntent = new Intent();
-		returnIntent.putExtra("debt_type", debtType);
-		returnIntent.putExtra("new_debt", debt);
-		setResult(RESULT_OK,returnIntent);   
-		finish();
+			Intent returnIntent = new Intent();
+			returnIntent.putExtra("debt_type", debtType);
+			returnIntent.putExtra("new_debt", debt);
+			setResult(RESULT_OK,returnIntent);   
+			finish();
+		} else {
+			return;
+		}
 	}
 
 

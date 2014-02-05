@@ -20,6 +20,7 @@
     
     <EditText
         android:id="@+id/debtor_name"
+        android:tag="@string/tag_name_field"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/debt_type_spinner"
@@ -27,6 +28,7 @@
         android:textSize="14pt" />
     <EditText
         android:id="@+id/debtor_phone"
+        android:tag="@string/tag_phone_field"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/debtor_name"
@@ -49,6 +51,7 @@
     	    android:text="@string/currency_dollar"/>
     	<EditText 
         	android:id="@+id/amt_dollars"
+        	android:tag="@string/tag_amt_field"
         	android:inputType="numberDecimal"
 	        android:ems="8"
         	android:layout_toRightOf="@id/currency"        
@@ -59,6 +62,7 @@
     
     <EditText
         android:id="@+id/debt_description"
+        android:tag="@string/tag_descrip_field"
         android:lines="2"
         android:maxLines="2"
 		android:layout_width="fill_parent"

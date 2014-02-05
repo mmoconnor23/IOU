@@ -7,6 +7,10 @@
     <string name="iou">IOU</string>
     <string name="uome">UOme</string>
     <string name="title_activity_add_debtor">AddDebtor</string>
+    <string name="tag_name_field">Name field</string>
+    <string name="tag_phone_field">Phone field</string>
+    <string name="tag_amt_field">Amount field</string>
+    <string name="tag_descrip_field">Description field</string>
     <string name="contact_name">Name</string>
     <string name="contact_phone">999&#8211;999&#8211;9999</string>
     <string name="currency_dollar">$</string>
